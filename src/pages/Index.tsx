@@ -71,12 +71,20 @@ const BASE_PRICES: Record<string, Record<number, number>> = {
   "Пенопласт (ПСБ)": { 50: 980, 80: 1200, 100: 1380, 120: 1560, 150: 1850 },
 };
 
-const PRODUCTS = [
-  { name: "Профнастил С8", desc: "Для стен и ограждений", price: "от 280 ₽/м²", emoji: "🏗️" },
-  { name: "Профнастил НС35", desc: "Для кровли", price: "от 390 ₽/м²", emoji: "🏠" },
-  { name: "Металлочерепица", desc: "Монтеррей, Каскад", price: "от 520 ₽/м²", emoji: "🏘️" },
-  { name: "Доборные элементы", desc: "Коньки, торцы, нащельники", price: "от 180 ₽/п.м", emoji: "🔩" },
-  { name: "Крепёжные системы", desc: "Саморезы, дюбели, кляммеры", price: "от 4 ₽/шт", emoji: "⚙️" },
+const PRODUCTS_INSTALL = [
+  { name: "Саморезы кровельные", desc: "Для крепления панелей и профнастила", price: "от 4 ₽/шт", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/f6de2aa7-2e9e-475a-8591-ff924006c17e.jpg" },
+  { name: "Уплотнительная лента", desc: "Герметизация стыков панелей", price: "от 320 ₽/рулон", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/d4fc2109-1226-4c38-9d0d-ea3b4d608a5e.jpg" },
+  { name: "Монтажная пена", desc: "Профессиональная, всесезонная", price: "от 410 ₽/шт", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/4dd2fcc2-1ba2-41bd-b89d-b8615eafd575.jpg" },
+  { name: "Анкеры и дюбели", desc: "Усиленные, для тяжёлых конструкций", price: "от 12 ₽/шт", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/6d090b46-0e34-4ea0-a94a-c642b405b418.jpg" },
+  { name: "Монтажный инструмент", desc: "Биты, насадки, заклёпочники", price: "от 850 ₽", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/24a3433c-f795-409f-84d4-4afa92e80af0.jpg" },
+];
+
+const PRODUCTS_TRIM = [
+  { name: "Конёк кровельный", desc: "Для оформления конька крыши", price: "от 280 ₽/п.м", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/a0a85a3d-a5c0-4b17-a56d-dd14fee2e5f5.jpg" },
+  { name: "Угловой профиль", desc: "Внешние и внутренние углы", price: "от 220 ₽/п.м", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/f10e0ba4-dff5-455a-b967-3876444bc8c5.jpg" },
+  { name: "Капельник", desc: "Карнизная планка для отвода воды", price: "от 180 ₽/п.м", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/fa07e087-45cc-4388-b482-3b9eabbfcdb1.jpg" },
+  { name: "Обрамление окон", desc: "Откосы и наличники", price: "от 240 ₽/п.м", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/11a45734-5e34-4dbf-b33a-c38ea5f0bc33.jpg" },
+  { name: "Парапетная планка", desc: "Защита верхней кромки парапета", price: "от 310 ₽/п.м", img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/5bfe8c9d-8a69-4dcb-b4f7-02c9adc964e4.jpg" },
 ];
 
 const FAQS = [
@@ -419,42 +427,55 @@ function Calculator() {
 // ─── PRODUCTS ───────────────────────────────────────────────────────────────
 
 function Products() {
+  const [tab, setTab] = useState<"install" | "trim">("install");
   const [active, setActive] = useState(0);
+
+  const list = tab === "install" ? PRODUCTS_INSTALL : PRODUCTS_TRIM;
+
+  const switchTab = (t: "install" | "trim") => {
+    setTab(t);
+    setActive(0);
+  };
 
   return (
     <section id="products" className="py-20 bg-[hsl(var(--background))]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between mb-12">
-          <div>
-            <p className="font-golos text-[hsl(var(--orange))] font-semibold uppercase text-sm tracking-widest mb-2">Ассортимент</p>
-            <h2 className="font-oswald text-4xl sm:text-5xl font-bold text-[hsl(var(--steel))] uppercase">Сопутствующие товары</h2>
-          </div>
-          <div className="flex gap-2">
-            <button onClick={() => setActive((a) => (a === 0 ? PRODUCTS.length - 1 : a - 1))}
-              className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-[hsl(var(--orange))] hover:text-[hsl(var(--orange))] transition-colors">
-              <Icon name="ChevronLeft" size={18} />
-            </button>
-            <button onClick={() => setActive((a) => (a === PRODUCTS.length - 1 ? 0 : a + 1))}
-              className="w-10 h-10 rounded-full border border-gray-300 flex items-center justify-center hover:border-[hsl(var(--orange))] hover:text-[hsl(var(--orange))] transition-colors">
-              <Icon name="ChevronRight" size={18} />
-            </button>
-          </div>
+        <div className="text-center mb-10">
+          <p className="font-golos text-[hsl(var(--orange))] font-semibold uppercase text-sm tracking-widest mb-2">Ассортимент</p>
+          <h2 className="font-oswald text-4xl sm:text-5xl font-bold text-[hsl(var(--steel))] uppercase">Сопутствующие товары</h2>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {PRODUCTS.map((p, i) => (
+        {/* Tabs */}
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-0 mb-10 max-w-3xl mx-auto">
+          <button onClick={() => switchTab("install")}
+            className={`flex-1 px-6 py-3 font-oswald uppercase tracking-wider text-sm sm:text-base font-semibold border-2 transition-all rounded-lg sm:rounded-r-none ${tab === "install" ? "bg-[hsl(var(--orange))] border-[hsl(var(--orange))] text-white" : "border-gray-200 text-gray-600 hover:border-[hsl(var(--orange))] bg-white"}`}>
+            Товары для монтажа
+          </button>
+          <button onClick={() => switchTab("trim")}
+            className={`flex-1 px-6 py-3 font-oswald uppercase tracking-wider text-sm sm:text-base font-semibold border-2 transition-all rounded-lg sm:rounded-l-none sm:border-l-0 ${tab === "trim" ? "bg-[hsl(var(--orange))] border-[hsl(var(--orange))] text-white" : "border-gray-200 text-gray-600 hover:border-[hsl(var(--orange))] bg-white"}`}>
+            Доборные элементы
+          </button>
+        </div>
+
+        {/* Products grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-5">
+          {list.map((p, i) => (
             <div key={p.name}
-              className={`bg-white rounded-xl p-5 border-2 hover-lift cursor-pointer transition-all ${i === active ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100"}`}
+              className={`bg-white rounded-xl overflow-hidden border-2 hover-lift cursor-pointer transition-all flex flex-col ${i === active ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100"}`}
               onClick={() => setActive(i)}>
-              <div className="text-4xl mb-3">{p.emoji}</div>
-              <h3 className="font-oswald font-semibold text-[hsl(var(--steel))] uppercase text-sm leading-snug mb-1">{p.name}</h3>
-              <p className="font-golos text-gray-400 text-xs mb-2">{p.desc}</p>
-              <p className="font-golos font-bold text-[hsl(var(--orange))] text-sm">{p.price}</p>
+              <div className="aspect-square w-full overflow-hidden bg-gray-50">
+                <img src={p.img} alt={p.name} className="w-full h-full object-cover" />
+              </div>
+              <div className="p-4 flex-1 flex flex-col">
+                <h3 className="font-oswald font-semibold text-[hsl(var(--steel))] uppercase text-base leading-snug mb-1">{p.name}</h3>
+                <p className="font-golos text-gray-400 text-xs mb-3 flex-1">{p.desc}</p>
+                <p className="font-golos font-bold text-[hsl(var(--orange))] text-base">{p.price}</p>
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="text-center mt-8">
+        <div className="text-center mt-10">
           <a href="#contacts" className="inline-flex items-center gap-2 font-golos text-[hsl(var(--steel))] font-semibold hover:text-[hsl(var(--orange))] transition-colors">
             Запросить полный прайс-лист
             <Icon name="ArrowRight" size={16} />
