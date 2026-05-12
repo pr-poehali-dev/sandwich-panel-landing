@@ -117,14 +117,14 @@ function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-[hsl(var(--steel))] shadow-lg">
+    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{background: 'linear-gradient(to right, #ffffff 260px, hsl(var(--steel)) 260px)'}}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           <a href="#" className="flex items-center shrink-0">
             <img
               src="https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/bucket/46ccdb28-75ba-4dca-b464-5fae4ae2a81d.png"
               alt="Труд Вача — логотип"
-              className="h-10 w-auto object-contain brightness-0 invert"
+              className="h-10 w-auto object-contain"
             />
           </a>
 
@@ -154,7 +154,7 @@ function Header() {
             </a>
           </div>
 
-          <button className="lg:hidden text-white p-1" onClick={() => setMobileOpen(!mobileOpen)}>
+          <button className="lg:hidden text-[hsl(var(--steel))] p-1" onClick={() => setMobileOpen(!mobileOpen)}>
             <Icon name={mobileOpen ? "X" : "Menu"} size={24} />
           </button>
         </div>
@@ -190,8 +190,9 @@ function Hero() {
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
         <img src={HERO_IMAGE} alt="Производство сэндвич-панелей" className="w-full h-full object-cover" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(210,18%,12%)/97] via-[hsl(210,18%,12%)/80] to-[hsl(210,18%,12%)/30]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(210,18%,12%)/70] to-transparent" />
+        <div className="absolute inset-0 bg-[hsl(210,18%,8%)]/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[hsl(210,18%,8%)]/95 via-[hsl(210,18%,8%)]/80 to-[hsl(210,18%,8%)]/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[hsl(210,18%,8%)]/80 via-transparent to-transparent" />
       </div>
       <div className="absolute right-0 top-0 bottom-0 w-1.5 bg-[hsl(var(--orange))]" />
 
