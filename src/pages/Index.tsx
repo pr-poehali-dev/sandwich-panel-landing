@@ -120,14 +120,12 @@ function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-[hsl(var(--steel))] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
-          <a href="#" className="flex items-center gap-2 shrink-0">
-            <div className="w-9 h-9 bg-[hsl(var(--orange))] rounded flex items-center justify-center">
-              <Icon name="Layers" size={20} className="text-white" />
-            </div>
-            <div className="leading-tight">
-              <div className="font-oswald font-bold text-white text-sm uppercase tracking-wider">ВачаПанель</div>
-              <div className="text-[10px] text-gray-400 uppercase tracking-widest">производитель</div>
-            </div>
+          <a href="#" className="flex items-center shrink-0">
+            <img
+              src="https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/bucket/46ccdb28-75ba-4dca-b464-5fae4ae2a81d.png"
+              alt="Труд Вача — логотип"
+              className="h-10 w-auto object-contain"
+            />
           </a>
 
           <nav className="hidden lg:flex items-center gap-6">
@@ -760,11 +758,12 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="grid sm:grid-cols-3 gap-8 mb-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <div className="w-8 h-8 bg-[hsl(var(--orange))] rounded flex items-center justify-center">
-                <Icon name="Layers" size={16} className="text-white" />
-              </div>
-              <span className="font-oswald font-bold text-white uppercase tracking-wider">ВачаПанель</span>
+            <div className="flex items-center mb-3">
+              <img
+                src="https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/bucket/46ccdb28-75ba-4dca-b464-5fae4ae2a81d.png"
+                alt="Труд Вача — логотип"
+                className="h-8 w-auto object-contain brightness-0 invert"
+              />
             </div>
             <p className="font-golos text-gray-400 text-sm leading-relaxed">
               Производитель сэндвич-панелей в Нижегородской области. Стеновые и кровельные панели с 2009 года.
