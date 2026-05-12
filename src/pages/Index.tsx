@@ -124,7 +124,7 @@ function Header() {
             <img
               src="https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/bucket/46ccdb28-75ba-4dca-b464-5fae4ae2a81d.png"
               alt="Труд Вача — логотип"
-              className="h-10 w-auto object-contain"
+              className="h-10 w-auto object-contain brightness-0 invert"
             />
           </a>
 
@@ -766,7 +766,7 @@ function Footer() {
               />
             </div>
             <p className="font-golos text-gray-400 text-sm leading-relaxed">
-              Производитель сэндвич-панелей в Нижегородской области. Стеновые и кровельные панели с 2009 года.
+              Производитель сэндвич-панелей в Нижегородской области. Стеновые и кровельные панели с 2009 года. ООО «Труд Вача».
             </p>
           </div>
           <div>
@@ -788,7 +788,7 @@ function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="font-golos text-gray-500 text-sm">© 2024 ВачаПанель · Все права защищены</p>
+          <p className="font-golos text-gray-500 text-sm">© 2024 Труд Вача · Все права защищены</p>
           <p className="font-golos text-gray-600 text-xs">ИНН 5225000000 · ОГРН 1000000000000</p>
         </div>
       </div>
