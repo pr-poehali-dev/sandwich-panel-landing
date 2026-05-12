@@ -103,11 +103,11 @@ const FAQS = [
 ];
 
 const GALLERY_IMGS = [
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
+  "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/f3fa3b57-cc52-4e66-8f7f-bf813657d2c1.jpg",
   "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/50316217-9523-43d8-b030-07fe0a555907.jpg",
   "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/80f83038-a4c9-444e-b5b2-6f748494ce9f.jpg",
-  "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=600&q=80",
-  "https://images.unsplash.com/photo-1478827536114-da961b7f86d2?w=600&q=80",
+  "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/439b702d-16dd-48a9-a2be-de4263d3446f.jpg",
+  "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/8c0e3339-97c6-4f3c-8b3b-70ff4e2ec19c.jpg",
   "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/0fb9e89c-a7cd-4fd5-a7f8-6a39942ad922.jpg",
 ];
 
