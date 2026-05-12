@@ -117,7 +117,7 @@ function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 shadow-lg" style={{background: 'linear-gradient(to right, #ffffff 260px, hsl(var(--steel)) 260px)'}}>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-16 gap-4">
           <a href="#" className="flex items-center shrink-0">
@@ -130,7 +130,7 @@ function Header() {
 
           <nav className="hidden lg:flex items-center gap-6">
             {NAV_LINKS.map((l) => (
-              <a key={l.href} href={l.href} className="text-gray-300 hover:text-[hsl(var(--orange))] text-sm font-golos transition-colors">
+              <a key={l.href} href={l.href} className="text-gray-700 hover:text-[hsl(var(--orange))] text-sm font-golos transition-colors">
                 {l.label}
               </a>
             ))}
@@ -145,7 +145,7 @@ function Header() {
                 <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.553 4.116 1.522 5.847L.057 23.886a.5.5 0 0 0 .614.614l6.039-1.465A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.884 0-3.65-.495-5.185-1.36l-.368-.212-3.58.869.887-3.58-.23-.378A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
               </svg>
             </a>
-            <a href="tel:+78314000000" className="font-oswald text-white font-semibold text-base tracking-wide hover:text-[hsl(var(--orange))] transition-colors">
+            <a href="tel:+78314000000" className="font-oswald text-gray-900 font-semibold text-base tracking-wide hover:text-[hsl(var(--orange))] transition-colors">
               +7 (831) 400-00-00
             </a>
             <a href="#contacts"
@@ -154,23 +154,23 @@ function Header() {
             </a>
           </div>
 
-          <button className="lg:hidden text-[hsl(var(--steel))] p-1" onClick={() => setMobileOpen(!mobileOpen)}>
+          <button className="lg:hidden text-gray-800 p-1" onClick={() => setMobileOpen(!mobileOpen)}>
             <Icon name={mobileOpen ? "X" : "Menu"} size={24} />
           </button>
         </div>
       </div>
 
       {mobileOpen && (
-        <div className="lg:hidden bg-[hsl(var(--steel-mid))] border-t border-white/10 px-4 pb-4">
+        <div className="lg:hidden bg-white border-t border-gray-100 px-4 pb-4">
           <nav className="flex flex-col gap-2 pt-3">
             {NAV_LINKS.map((l) => (
               <a key={l.href} href={l.href} onClick={() => setMobileOpen(false)}
-                className="text-gray-200 hover:text-[hsl(var(--orange))] py-2 text-sm font-golos border-b border-white/10 transition-colors">
+                className="text-gray-700 hover:text-[hsl(var(--orange))] py-2 text-sm font-golos border-b border-gray-100 transition-colors">
                 {l.label}
               </a>
             ))}
           </nav>
-          <a href="tel:+78314000000" className="block mt-4 font-oswald text-white font-semibold text-lg">
+          <a href="tel:+78314000000" className="block mt-4 font-oswald text-gray-900 font-semibold text-lg">
             +7 (831) 400-00-00
           </a>
           <a href="#contacts" onClick={() => setMobileOpen(false)}
