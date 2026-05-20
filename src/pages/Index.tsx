@@ -516,13 +516,13 @@ function Calculator() {
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 grid sm:grid-cols-2 gap-4">
+            <div className="p-4 sm:p-6 flex sm:grid sm:grid-cols-2 gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none scroll-pl-4 [scrollbar-width:thin]">
               {FILLER_TYPES.map((f) => {
                 const info = FILLER_INFO[f];
                 const isActive = filler === f;
                 return (
                   <button key={f} onClick={() => { handleFiller(f); setFillerOpen(false); }}
-                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
+                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift shrink-0 w-[85%] sm:w-auto snap-start ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
                     <div className="aspect-[4/3] w-full bg-gray-50 overflow-hidden">
                       {info?.img && <img src={info.img} alt={f} className="w-full h-full object-cover" />}
                     </div>
@@ -577,13 +577,13 @@ function Calculator() {
               </button>
             </div>
 
-            <div className="p-4 sm:p-6 grid sm:grid-cols-3 gap-4">
+            <div className="p-4 sm:p-6 flex sm:grid sm:grid-cols-3 gap-4 overflow-x-auto sm:overflow-visible snap-x snap-mandatory sm:snap-none scroll-pl-4 [scrollbar-width:thin]">
               {WAVE_TYPES[panelType].map((w) => {
                 const info = WAVE_INFO[w];
                 const isActive = wave === w;
                 return (
                   <button key={w} onClick={() => { setWave(w); setWaveOpen(false); }}
-                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
+                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift shrink-0 w-[80%] sm:w-auto snap-start ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
                     <div className="aspect-square w-full bg-gray-50 overflow-hidden">
                       {info?.img && <img src={info.img} alt={w} className="w-full h-full object-cover" />}
                     </div>
