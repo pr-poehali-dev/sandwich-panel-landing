@@ -44,8 +44,51 @@ const ADVANTAGES = [
 const PANEL_TYPES = ["Стеновые", "Кровельные"] as const;
 
 const WAVE_TYPES: Record<string, string[]> = {
-  Стеновые: ["Прямолинейная", "Микроволна", "С-21", "МП-20"],
+  Стеновые: ["Прямолинейная", "Микроволна", "С-21"],
   Кровельные: ["Трапеция Т-35", "Трапеция Т-75", "Прямолинейная"],
+};
+
+const WAVE_INFO: Record<string, { img: string; benefits: string[] }> = {
+  "Прямолинейная": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/84025bdb-3002-4abe-868f-f57a951adebc.jpg",
+    benefits: [
+      "Лаконичный современный вид фасада",
+      "Идеальна для офисов и торговых центров",
+      "Простой и быстрый монтаж",
+    ],
+  },
+  "Микроволна": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/016be961-3ed3-4676-a257-189c28abe147.jpg",
+    benefits: [
+      "Скрывает мелкие неровности поверхности",
+      "Универсальна — подходит для любых зданий",
+      "Усиленная жёсткость за счёт микрорельефа",
+    ],
+  },
+  "С-21": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/0556afe8-7d71-4f35-8237-02dc1d6f47b4.jpg",
+    benefits: [
+      "Повышенная прочность за счёт глубокого профиля",
+      "Подходит для больших пролётов",
+      "Классический промышленный вид",
+    ],
+  },
+  "Трапеция Т-35": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/0556afe8-7d71-4f35-8237-02dc1d6f47b4.jpg",
+    benefits: [
+      "Оптимальна для кровли средних пролётов",
+      "Хороший отвод воды",
+      "Универсальная геометрия",
+    ],
+  },
+  "Трапеция Т-75": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/0556afe8-7d71-4f35-8237-02dc1d6f47b4.jpg",
+    benefits: [
+      "Высокая несущая способность",
+      "Подходит для больших пролётов",
+      "Используется на промышленных объектах",
+    ],
+  },
 };
 
 const FILLER_TYPES = ["Минеральная вата", "Пенопласт (ПСБ)"];
@@ -297,6 +340,7 @@ function Calculator() {
   const [thickness, setThickness] = useState(100);
   const [color, setColor] = useState(COLORS[6]);
   const [area, setArea] = useState(100);
+  const [waveOpen, setWaveOpen] = useState(false);
 
   const handlePanelType = (t: "Стеновые" | "Кровельные") => {
     setPanelType(t);
@@ -340,10 +384,11 @@ function Calculator() {
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div>
                 <label className="block font-golos text-sm text-gray-500 mb-1">Вид волны</label>
-                <select value={wave} onChange={(e) => setWave(e.target.value)}
-                  className="w-full border border-gray-200 rounded px-3 py-2 font-golos text-[hsl(var(--steel))] bg-white focus:outline-none focus:border-[hsl(var(--orange))] text-sm">
-                  {WAVE_TYPES[panelType].map((o) => <option key={o}>{o}</option>)}
-                </select>
+                <button type="button" onClick={() => setWaveOpen(true)}
+                  className="w-full flex items-center justify-between border border-gray-200 rounded px-3 py-2 font-golos text-[hsl(var(--steel))] bg-white hover:border-[hsl(var(--orange))] text-sm transition-colors">
+                  <span>{wave}</span>
+                  <Icon name="LayoutGrid" size={16} className="text-[hsl(var(--orange))]" />
+                </button>
               </div>
               <div>
                 <label className="block font-golos text-sm text-gray-500 mb-1">Вид наполнителя</label>
@@ -420,6 +465,57 @@ function Calculator() {
           </div>
         </div>
       </div>
+
+      {/* Wave selection popup */}
+      {waveOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setWaveOpen(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white rounded-t-2xl">
+              <div>
+                <p className="font-golos text-[hsl(var(--orange))] text-xs uppercase tracking-widest font-semibold">Выбор профиля</p>
+                <h3 className="font-oswald text-xl sm:text-2xl font-bold text-[hsl(var(--steel))] uppercase">Вид волны</h3>
+              </div>
+              <button onClick={() => setWaveOpen(false)}
+                className="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-colors">
+                <Icon name="X" size={20} />
+              </button>
+            </div>
+
+            <div className="p-4 sm:p-6 grid sm:grid-cols-3 gap-4">
+              {WAVE_TYPES[panelType].map((w) => {
+                const info = WAVE_INFO[w];
+                const isActive = wave === w;
+                return (
+                  <button key={w} onClick={() => { setWave(w); setWaveOpen(false); }}
+                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
+                    <div className="aspect-square w-full bg-gray-50 overflow-hidden">
+                      {info?.img && <img src={info.img} alt={w} className="w-full h-full object-cover" />}
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-oswald font-semibold text-[hsl(var(--steel))] uppercase text-base">{w}</h4>
+                        {isActive && <Icon name="CheckCircle2" size={18} className="text-[hsl(var(--orange))]" />}
+                      </div>
+                      {info?.benefits && (
+                        <ul className="space-y-1.5">
+                          {info.benefits.map((b) => (
+                            <li key={b} className="flex gap-2 font-golos text-xs text-gray-600 leading-snug">
+                              <Icon name="Check" size={12} className="text-[hsl(var(--orange))] shrink-0 mt-0.5" />
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
