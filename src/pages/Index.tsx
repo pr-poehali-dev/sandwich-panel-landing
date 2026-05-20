@@ -93,6 +93,37 @@ const WAVE_INFO: Record<string, { img: string; benefits: string[] }> = {
 
 const FILLER_TYPES = ["Минеральная вата", "Пенопласт (ПСБ)"];
 
+const FILLER_INFO: Record<string, { img: string; benefits: string[]; suitableFor: string[] }> = {
+  "Минеральная вата": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/a3b21b5e-b97e-4c14-93fa-4ba7efbfbbe4.jpg",
+    benefits: [
+      "Негорючий материал (класс НГ)",
+      "Высокая шумоизоляция",
+      "Паропроницаемость — стены «дышат»",
+      "Срок службы более 50 лет",
+    ],
+    suitableFor: [
+      "Промышленные и складские здания",
+      "Объекты с повышенными требованиями к пожарной безопасности",
+      "Холодильные и морозильные камеры",
+    ],
+  },
+  "Пенопласт (ПСБ)": {
+    img: "https://cdn.poehali.dev/projects/a621fb39-3f34-4513-9b42-231474e4c569/files/fa7e2b67-44f7-431e-89e5-8b36b94e8bec.jpg",
+    benefits: [
+      "Доступная цена — экономия бюджета",
+      "Низкая теплопроводность",
+      "Малый вес — простой монтаж",
+      "Влагостойкость и долговечность",
+    ],
+    suitableFor: [
+      "Торговые павильоны и автомойки",
+      "Сельскохозяйственные постройки",
+      "Гаражи и хозяйственные блоки",
+    ],
+  },
+};
+
 const THICKNESSES: Record<string, number[]> = {
   "Минеральная вата": [50, 80, 100, 120, 150, 200],
   "Пенопласт (ПСБ)": [50, 80, 100, 120, 150],
@@ -341,6 +372,7 @@ function Calculator() {
   const [color, setColor] = useState(COLORS[6]);
   const [area, setArea] = useState(100);
   const [waveOpen, setWaveOpen] = useState(false);
+  const [fillerOpen, setFillerOpen] = useState(false);
 
   const handlePanelType = (t: "Стеновые" | "Кровельные") => {
     setPanelType(t);
@@ -392,10 +424,11 @@ function Calculator() {
               </div>
               <div>
                 <label className="block font-golos text-sm text-gray-500 mb-1">Вид наполнителя</label>
-                <select value={filler} onChange={(e) => handleFiller(e.target.value)}
-                  className="w-full border border-gray-200 rounded px-3 py-2 font-golos text-[hsl(var(--steel))] bg-white focus:outline-none focus:border-[hsl(var(--orange))] text-sm">
-                  {FILLER_TYPES.map((o) => <option key={o}>{o}</option>)}
-                </select>
+                <button type="button" onClick={() => setFillerOpen(true)}
+                  className="w-full flex items-center justify-between border border-gray-200 rounded px-3 py-2 font-golos text-[hsl(var(--steel))] bg-white hover:border-[hsl(var(--orange))] text-sm transition-colors">
+                  <span>{filler}</span>
+                  <Icon name="Layers" size={16} className="text-[hsl(var(--orange))]" />
+                </button>
               </div>
             </div>
 
@@ -465,6 +498,67 @@ function Calculator() {
           </div>
         </div>
       </div>
+
+      {/* Filler selection popup */}
+      {fillerOpen && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          onClick={() => setFillerOpen(false)}>
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white rounded-t-2xl">
+              <div>
+                <p className="font-golos text-[hsl(var(--orange))] text-xs uppercase tracking-widest font-semibold">Выбор материала</p>
+                <h3 className="font-oswald text-xl sm:text-2xl font-bold text-[hsl(var(--steel))] uppercase">Вид наполнителя</h3>
+              </div>
+              <button onClick={() => setFillerOpen(false)}
+                className="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center text-gray-500 transition-colors">
+                <Icon name="X" size={20} />
+              </button>
+            </div>
+
+            <div className="p-4 sm:p-6 grid sm:grid-cols-2 gap-4">
+              {FILLER_TYPES.map((f) => {
+                const info = FILLER_INFO[f];
+                const isActive = filler === f;
+                return (
+                  <button key={f} onClick={() => { handleFiller(f); setFillerOpen(false); }}
+                    className={`text-left bg-white rounded-xl border-2 overflow-hidden transition-all hover-lift ${isActive ? "border-[hsl(var(--orange))] shadow-lg" : "border-gray-100 hover:border-[hsl(var(--orange))]/50"}`}>
+                    <div className="aspect-[4/3] w-full bg-gray-50 overflow-hidden">
+                      {info?.img && <img src={info.img} alt={f} className="w-full h-full object-cover" />}
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="font-oswald font-semibold text-[hsl(var(--steel))] uppercase text-base">{f}</h4>
+                        {isActive && <Icon name="CheckCircle2" size={18} className="text-[hsl(var(--orange))]" />}
+                      </div>
+
+                      <p className="font-golos text-[11px] uppercase tracking-widest text-gray-400 font-semibold mb-1.5">Преимущества</p>
+                      <ul className="space-y-1.5 mb-3">
+                        {info?.benefits.map((b) => (
+                          <li key={b} className="flex gap-2 font-golos text-xs text-gray-600 leading-snug">
+                            <Icon name="Check" size={12} className="text-[hsl(var(--orange))] shrink-0 mt-0.5" />
+                            <span>{b}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <p className="font-golos text-[11px] uppercase tracking-widest text-gray-400 font-semibold mb-1.5">Для кого подходит</p>
+                      <ul className="space-y-1.5">
+                        {info?.suitableFor.map((s) => (
+                          <li key={s} className="flex gap-2 font-golos text-xs text-gray-600 leading-snug">
+                            <Icon name="Users" size={12} className="text-[hsl(var(--steel))] shrink-0 mt-0.5" />
+                            <span>{s}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Wave selection popup */}
       {waveOpen && (
