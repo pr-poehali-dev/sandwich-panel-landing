@@ -1,9 +1,16 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 import { NAV_LINKS, ADVANTAGES, HERO_IMAGE } from "./data";
+import { ContactPopup } from "./ContactPopup";
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [contactOpen, setContactOpen] = useState(false);
+
+  const openContact = () => {
+    setContactOpen(true);
+    setMobileOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md border-b border-gray-100">
@@ -37,10 +44,10 @@ export function Header() {
             <a href="tel:+78314000000" className="font-oswald text-gray-900 font-semibold text-base tracking-wide hover:text-[hsl(var(--orange))] transition-colors">
               +7 (831) 400-00-00
             </a>
-            <a href="#contacts"
+            <button onClick={openContact}
               className="bg-[hsl(var(--orange))] hover:bg-[hsl(var(--orange-dark))] text-white font-golos font-semibold text-sm px-4 py-2 rounded transition-colors whitespace-nowrap">
               Связаться с нами
-            </a>
+            </button>
           </div>
 
           <button className="lg:hidden text-gray-800 p-1" onClick={() => setMobileOpen(!mobileOpen)}>
@@ -62,12 +69,13 @@ export function Header() {
           <a href="tel:+78314000000" className="block mt-4 font-oswald text-gray-900 font-semibold text-lg">
             +7 (831) 400-00-00
           </a>
-          <a href="#contacts" onClick={() => setMobileOpen(false)}
+          <button onClick={openContact}
             className="mt-3 block w-full text-center bg-[hsl(var(--orange))] text-white font-golos font-semibold py-2 rounded transition-colors">
             Связаться с нами
-          </a>
+          </button>
         </div>
       )}
+      <ContactPopup open={contactOpen} onClose={() => setContactOpen(false)} />
     </header>
   );
 }
